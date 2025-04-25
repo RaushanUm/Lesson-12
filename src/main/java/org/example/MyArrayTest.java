@@ -1,13 +1,19 @@
 package org.example;
 
-public class MyArrayTest {
-    public static int testArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+class MyArrayTest {
+    private String[][] array;
+
+    public MyArrayTest(String[][] array) {
+        this.array = array;
+    }
+
+    public int processArray() throws MyArraySizeException, MyArrayDataException {
         if (array.length != 4) {
-            throw new MyArraySizeException("Некорректный размер массива: ожидается 4x4");
+            throw new MyArraySizeException("Некорректный размер массива по строкам");
         }
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i].length != 4) {
-                throw new MyArraySizeException("Некорректный размер массива: ожидается 4x4");
+                throw new MyArraySizeException("Некорректный размер массива в строке " + i);
             }
         }
 
@@ -18,10 +24,11 @@ public class MyArrayTest {
                     int value = Integer.parseInt(array[i][j]);
                     sum += value;
                 } catch (NumberFormatException e) {
-                    throw new MyArrayDataException("Некорректные данные в ячейке [" + i + "][" + j + "]: " + array[i][j]);
+                    throw new MyArrayDataException("Неверные данные в ячейке [" + i + "][" + j + "]: " + array[i][j]);
                 }
             }
         }
         return sum;
     }
 }
+
